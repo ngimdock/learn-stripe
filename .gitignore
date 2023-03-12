@@ -1,0 +1,10 @@
+
+/node_modules
+node_modules
+
+.env
+*.env
+
+# Logs
+
+# generate a node modules content to ignore for node projects
