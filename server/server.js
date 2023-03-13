@@ -1,12 +1,17 @@
 import express from "express";
 import dotenv from "dotenv";
 import Stripe from "stripe";
-
+import cors from "cors";
 dotenv.config({ path: "../.env" });
 
 const app = express();
 app.use(express.json());
-app.use(express.static("public"));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  })
+);
+// app.use(express.static("public"));
 const port = process.env.SERVER_PORT | 3000;
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
@@ -41,8 +46,8 @@ app.post("/create-checkout-session", async (req, res) => {
       payment_method_types: ["card"],
       mode: "payment",
       line_items: lineItems,
-      success_url: `${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/success.html`,
-      cancel_url: `${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/cancel.html`,
+      success_url: `${process.env.CLIENT_URL}/client/success.html`,
+      cancel_url: `${process.env.CLIENT_URL}/client/cancel.html`,
     });
     res.json({ url: session.url });
   } catch (err) {

@@ -1,7 +1,9 @@
 const checkoutBtn = document.querySelector("#checkout-btn");
 
+const serverUrl = "http://localhost:3000";
+
 checkoutBtn.addEventListener("click", () => {
-  fetch("/create-checkout-session", {
+  fetch(`${serverUrl}/create-checkout-session`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
